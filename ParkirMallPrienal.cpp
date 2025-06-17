@@ -151,6 +151,48 @@ void TampilkanKendaraan() {
     }
 }
 
+int HitungBiayaParkir(int jam, int menit, int detik) {
+    int totalDetik = jam * 3600 + menit * 60 + detik;
+    double tarifPerDetik = 7140.0 / 3600.0; 
+    int biaya = totalDetik * tarifPerDetik;
+    return biaya;
+}
+
+void Pembayaran() {
+    UpdateWaktuParkir();
+    string platInput;
+    cout << "\nMasukkan plat mobil yang ingin dibayar: ";
+    getline(cin, platInput);
+
+    for (auto &mobil : daftarMobil) {
+        string platTerdaftar = mobil.plat;
+
+        if (platInput == platTerdaftar) {
+            if (mobil.sudahbayar) {
+                cout << "Mobil sudah membayar dan tidak sedang parkir.\n";
+                return;
+            }
+
+            int biaya = HitungBiayaParkir(mobil.jam, mobil.menit, mobil.detik);
+            cout << "Biaya parkir untuk mobil " << mobil.plat << " adalah: Rp " << biaya << endl;
+            char konfirmasi;
+            cout << "Apakah pembayaran dilakukan? (y/n): ";
+            cin >> konfirmasi;
+            cin.get();
+
+            if (konfirmasi == 'y' || konfirmasi == 'Y') {
+                mobil.sudahbayar = true;
+                cout << "Pembayaran berhasil. Mobil boleh keluar.\n";
+            } else {
+                cout << "Pembayaran dibatalkan.\n";
+            }
+            return;
+        }
+    }
+
+    cout << "PLAT TIDAK TERDAFTAR.\n";
+}
+
 int main() {
     string nama;
     long id;
@@ -188,7 +230,7 @@ int main() {
                     TampilkanKendaraan();
                     break;
                 case '3':
-                    cout << "\n...Lanjutkan...\n\n";
+                    Pembayaran();
                     break;
                 case '4':
                     cout << "\n...Lanjutkan...\n";
