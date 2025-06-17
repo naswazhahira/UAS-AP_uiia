@@ -5,11 +5,13 @@ struct Mobil {
     string plat;
     string merk;
     string warna;
+    bool sudahbayar;
+    int jam;
+    int menit;
+    int detik;
 };
 
-const int MAKS_MOBIL = 100;
-Mobil daftarMobil[MAKS_MOBIL];
-int jumlahMobil = 0;
+vector<Mobil> daftarMobil;
 
 void CetakGaris(char karakter,int jumlah) {
     for (int i = 0; i < jumlah; i++) {
@@ -67,6 +69,24 @@ char TampilanAwalOpsi(){
     return opsi;
 }
 
+void UpdateWaktuParkir() {
+    for (int i = 0; i < daftarMobil.size(); i++) {
+        if (!daftarMobil[i].sudahbayar) {
+            daftarMobil[i].detik += 15; 
+            
+            if (daftarMobil[i].detik >= 60) {
+                daftarMobil[i].menit += daftarMobil[i].detik / 60;
+                daftarMobil[i].detik = daftarMobil[i].detik % 60;
+            }
+            
+            if (daftarMobil[i].menit >= 60) {
+                daftarMobil[i].jam += daftarMobil[i].menit / 60;
+                daftarMobil[i].menit = daftarMobil[i].menit % 60;
+            }
+        }
+    }
+}
+
 void TambahkanKendaraan() {
     int jumlah;
     cout << "\nMasukkan jumlah mobil yang akan diparkirkan: ";
@@ -83,28 +103,50 @@ void TambahkanKendaraan() {
 
         cout << "\nMobil ke-" << jumlahMobil + 1 << endl;
         cout << "Masukkan plat mobil    : ";
-        getline(cin, mobilBaru->plat);
+        getline(cin, mobilBaru.plat);
         cout << "Masukkan merk mobil    : ";
-        getline(cin, mobilBaru->merk);
+        getline(cin, mobilBaru.merk);
         cout << "Masukkan warna mobil   : ";
-        getline(cin, mobilBaru->warna);
+        getline(cin, mobilBaru.warna);
 
-        daftarMobil[jumlahMobil] = *mobilBaru;
-        jumlahMobil++;
-        delete mobilBaru;
+        mobilBaru.jam = 0;
+        mobilBaru.menit = 0;
+        mobilBaru.detik = 0;
+        mobilBaru.sudahbayar = false;
+        
+        daftarMobil.push_back(mobilBaru);
     }
+    cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
 }
 
 void TampilkanKendaraan() {
-    if (jumlahMobil == 0) {
-        cout << "\nBelum ada kendaraan yang terdaftar.\n\n";
+    UpdateWaktuParkir();
+    int mobilbelumbayar = 0;
+    for (int i = 0; i < daftarMobil.size(); i++) {
+        if (!daftarMobil[i].sudahbayar) {
+            mobilbelumbayar++;
+        }
+    }
+    
+    if (mobilbelumbayar == 0) {
+        cout << "\nBelum ada kendaraan yang sedang parkir.\n\n";
     } else {
-        cout << "\n=== Daftar Kendaraan yang Terdaftar ===\n";
-        for (int i = 0; i < jumlahMobil; ++i) {
-            cout << "Mobil ke-" << i + 1 << endl;
-            cout << "Plat   : " << daftarMobil[i].plat << endl;
-            cout << "Merk   : " << daftarMobil[i].merk << endl;
-            cout << "Warna  : " << daftarMobil[i].warna << endl << endl;
+        cout << "\nDAFTAR MOBIL YANG SEDANG TERPARKIR :\n";
+        CetakGaris('=', 70); cout << endl;
+        
+        int nomor = 1;
+        for (int i = 0; i < daftarMobil.size(); i++) {
+            if (!daftarMobil[i].sudahbayar) {
+                cout << "Mobil ke-" << nomor << endl;
+                cout << "Plat mobil    : " << daftarMobil[i].plat << endl;
+                cout << "Merk mobil    : " << daftarMobil[i].merk << endl;
+                cout << "Warna mobil   : " << daftarMobil[i].warna << endl;
+                cout << "Waktu parkir  : " << daftarMobil[i].jam << " jam " 
+                     << daftarMobil[i].menit << " menit " 
+                     << daftarMobil[i].detik << " detik" << endl;
+                CetakGaris('=', 70); cout << endl;
+                nomor++;
+            }
         }
     }
 }
