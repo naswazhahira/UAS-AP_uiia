@@ -1,6 +1,16 @@
 #include <iostream>
 using namespace std;
 
+struct Mobil {
+    string plat;
+    string merk;
+    string warna;
+};
+
+const int MAKS_MOBIL = 100;
+Mobil daftarMobil[MAKS_MOBIL];
+int jumlahMobil = 0;
+
 void CetakGaris(char karakter,int jumlah) {
     for (int i = 0; i < jumlah; i++) {
         cout << karakter;
@@ -48,7 +58,8 @@ char TampilanAwalOpsi(){
     cout << "4. Keluar"<<endl;
     cout << "Masukkan opsi: ";
     cin >> opsi;
-
+    cin.get(); 
+    
     if (opsi < '1' || opsi > '4') {
         cout << "Opsi tidak valid. Silahkan coba lagi." << endl << endl;
         return TampilanAwalOpsi();
@@ -56,7 +67,47 @@ char TampilanAwalOpsi(){
     return opsi;
 }
 
-//lanjutin fungsinya
+void TambahkanKendaraan() {
+    int jumlah;
+    cout << "\nMasukkan jumlah mobil yang akan diparkirkan: ";
+    cin >> jumlah;
+    cin.get(); 
+
+    if (jumlahMobil + jumlah > MAKS_MOBIL) {
+        cout << "Kapasitas parkir tidak cukup.\n";
+        return;
+    }
+
+    for (int i = 0; i < jumlah; i++) {
+        Mobil* mobilBaru = new Mobil();
+
+        cout << "\nMobil ke-" << jumlahMobil + 1 << endl;
+        cout << "Masukkan plat mobil    : ";
+        getline(cin, mobilBaru->plat);
+        cout << "Masukkan merk mobil    : ";
+        getline(cin, mobilBaru->merk);
+        cout << "Masukkan warna mobil   : ";
+        getline(cin, mobilBaru->warna);
+
+        daftarMobil[jumlahMobil] = *mobilBaru;
+        jumlahMobil++;
+        delete mobilBaru;
+    }
+}
+
+void TampilkanKendaraan() {
+    if (jumlahMobil == 0) {
+        cout << "\nBelum ada kendaraan yang terdaftar.\n\n";
+    } else {
+        cout << "\n=== Daftar Kendaraan yang Terdaftar ===\n";
+        for (int i = 0; i < jumlahMobil; ++i) {
+            cout << "Mobil ke-" << i + 1 << endl;
+            cout << "Plat   : " << daftarMobil[i].plat << endl;
+            cout << "Merk   : " << daftarMobil[i].merk << endl;
+            cout << "Warna  : " << daftarMobil[i].warna << endl << endl;
+        }
+    }
+}
 
 int main() {
     string nama;
@@ -67,7 +118,7 @@ int main() {
     getline(cin, nama);
     cout << "Masukkan ID   : ";
     cin >> id;
-    cin.ignore();
+    cin.get();
 
     system("cls");
     if (CheckDataPetugas(nama, id) == 1) {
@@ -83,13 +134,27 @@ int main() {
         cout << " S E L A M A T  B E R T U G A S ";
         CetakGaris('-', 24);
         cout << endl;
-        TampilanAwalOpsi();
-    }
-    else
-    {
+        
+       char pilihan;
+        do {
+            pilihan = TampilanAwalOpsi();
+            switch (pilihan) {
+                case '1':
+                    TambahkanKendaraan();
+                    break;
+                case '2':
+                    TampilkanKendaraan();
+                    break;
+                case '3':
+                    cout << "\n...Lanjutkan...\n\n";
+                    break;
+                case '4':
+                    cout << "\n...Lanjutkan...\n";
+                    break;
+            }
+        } while (pilihan != '4');
+    } else {
         cout << "Nama petugas atau ID salah!." << endl;
-        return 0;
     }
-    
     return 0;
 }
