@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 struct Mobil {
@@ -93,15 +94,10 @@ void TambahkanKendaraan() {
     cin >> jumlah;
     cin.get(); 
 
-    if (jumlahMobil + jumlah > MAKS_MOBIL) {
-        cout << "Kapasitas parkir tidak cukup.\n";
-        return;
-    }
-
     for (int i = 0; i < jumlah; i++) {
-        Mobil* mobilBaru = new Mobil();
-
-        cout << "\nMobil ke-" << jumlahMobil + 1 << endl;
+        Mobil mobilBaru;
+        
+        cout << "\nMobil ke-" << daftarMobil.size() + 1 << endl;
         cout << "Masukkan plat mobil    : ";
         getline(cin, mobilBaru.plat);
         cout << "Masukkan merk mobil    : ";
@@ -118,7 +114,6 @@ void TambahkanKendaraan() {
     }
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
 }
-
 void TampilkanKendaraan() {
     UpdateWaktuParkir();
     int mobilbelumbayar = 0;
