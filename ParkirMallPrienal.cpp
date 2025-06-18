@@ -66,7 +66,9 @@ char TampilanAwalOpsi(){
     cin.get(); 
     
     if (opsi < '1' || opsi > '4') {
-        cout << "Opsi tidak valid. Silahkan coba lagi." << endl << endl;
+        cout << "Opsi tidak valid. Silahkan coba lagi (Tekan enter).";
+        getchar(); 
+        system("cls");
         return TampilanAwalOpsi();
     }
     return opsi;
@@ -91,21 +93,25 @@ void UpdateWaktuParkir() {
 }
 
 void TambahkanKendaraan() {
-    if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
-        cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\n";
-        return;
-    }
     int jumlah;
-    cout << "\nMasukkan jumlah mobil yang akan diparkirkan: ";
+    cout << "Masukkan jumlah mobil yang akan diparkirkan: ";
     cin >> jumlah;
     cin.get();
 
-    if (daftarMobil.size() + jumlah > KAPASITAS_MAKSIMUM) {
-        int sisa = KAPASITAS_MAKSIMUM - daftarMobil.size();
-        cout << "\nHanya " << sisa << " slot parkir yang tersedia.\n";
-        jumlah = sisa;
-
-    for (int i = 0; i < jumlah; i++) {
+    if (jumlah <= 0) {
+        cout << "Jumlah mobil tidak valid. Harap masukkan angka positif.\n";
+        return;
+    }
+    else if (jumlah > KAPASITAS_MAKSIMUM) {
+        cout << "Maaf, parkiran hanya dapat memuat 20 mobil.\n";
+        return;
+    }
+    else if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
+        cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\nParkiran hanya dapat memuat 20 mobil!\n";
+        return;
+    }
+    else {
+        for (int i = 0; i < jumlah; i++) {
         Mobil mobilBaru;
         
         cout << "\nMobil ke-" << daftarMobil.size() + 1 << endl;
@@ -122,11 +128,14 @@ void TambahkanKendaraan() {
         mobilBaru.sudahbayar = false;
         
         daftarMobil.push_back(mobilBaru);
-    }
+        }
+    system("cls");
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
     }
 }
+
 void TampilkanKendaraan() {
+    system("cls");
     UpdateWaktuParkir();
     int mobilbelumbayar = 0;
     for (int i = 0; i < daftarMobil.size(); i++) {
@@ -134,17 +143,17 @@ void TampilkanKendaraan() {
             mobilbelumbayar++;
         }
     }
-     cout << "Sisa slot parkir: " << KAPASITAS_MAKSIMUM - daftarMobil.size() << endl;
+    //  cout << "Sisa slot parkir: " << KAPASITAS_MAKSIMUM - daftarMobil.size() << endl;
     
     if (mobilbelumbayar == 0) {
         cout << "\nBelum ada kendaraan yang sedang parkir.\n\n";
     } else {
         cout << "\nDAFTAR MOBIL YANG SEDANG TERPARKIR :\n";
-        CetakGaris('=', 70); cout << endl;
         
         int nomor = 1;
         for (int i = 0; i < daftarMobil.size(); i++) {
             if (!daftarMobil[i].sudahbayar) {
+                CetakGaris('=', 80); cout << endl;
                 cout << "Mobil ke-" << nomor << endl;
                 cout << "Plat mobil    : " << daftarMobil[i].plat << endl;
                 cout << "Merk mobil    : " << daftarMobil[i].merk << endl;
@@ -152,7 +161,6 @@ void TampilkanKendaraan() {
                 cout << "Waktu parkir  : " << daftarMobil[i].jam << " jam " 
                      << daftarMobil[i].menit << " menit " 
                      << daftarMobil[i].detik << " detik" << endl;
-                CetakGaris('=', 70); cout << endl;
                 nomor++;
             }
         }
@@ -169,6 +177,8 @@ int HitungBiayaParkir(int jam, int menit, int detik) {
 void Pembayaran() {
     UpdateWaktuParkir();
     string platInput;
+    TampilkanKendaraan();
+    CetakGaris('=', 80); cout << endl;
     cout << "\nMasukkan plat mobil yang ingin dibayar: ";
     getline(cin, platInput);
 
@@ -182,7 +192,7 @@ void Pembayaran() {
             }
 
             int biaya = HitungBiayaParkir(mobil.jam, mobil.menit, mobil.detik);
-            cout << "Biaya parkir untuk mobil " << mobil.plat << " adalah: Rp " << biaya << endl;
+            cout << "B I A Y A  P A R K I R : Rp " << biaya << endl;
             char konfirmasi;
             cout << "Apakah pembayaran dilakukan? (y/n): ";
             cin >> konfirmasi;
@@ -190,15 +200,25 @@ void Pembayaran() {
 
             if (konfirmasi == 'y' || konfirmasi == 'Y') {
                 mobil.sudahbayar = true;
-                cout << "Pembayaran berhasil. Mobil boleh keluar.\n";
+                cout << "Pembayaran berhasil. Mobil boleh keluar.\n\n";
             } else {
-                cout << "Pembayaran dibatalkan.\n";
+                cout << "Pembayaran dibatalkan.\n\n";
             }
             return;
         }
     }
 
-    cout << "PLAT TIDAK TERDAFTAR.\n";
+    cout << "PLAT TIDAK TERDAFTAR.\n\n";
+}
+
+void TampilanKeluar() {
+    system("cls");
+    CetakGaris('=', 80); cout << endl;
+    CetakGaris(' ', 19);
+    cout << "TERIMA KASIH TELAH MENGGUNAKAN LAYANAN KAMI\n";
+    CetakGaris(' ', 23);
+    cout << "S A M P A I   J U M P A   L A G I !\n";
+    CetakGaris('=', 80);
 }
 
 int main() {
@@ -241,7 +261,7 @@ int main() {
                     Pembayaran();
                     break;
                 case '4':
-                    cout << "\n...Lanjutkan...\n";
+                    TampilanKeluar();
                     break;
             }
         } while (pilihan != '4');
