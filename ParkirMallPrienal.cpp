@@ -133,6 +133,7 @@ void TampilkanKendaraan() {
             mobilbelumbayar++;
         }
     }
+     cout << "Sisa slot parkir: " << KAPASITAS_MAKSIMUM - daftarMobil.size() << endl;
     
     if (mobilbelumbayar == 0) {
         cout << "\nBelum ada kendaraan yang sedang parkir.\n\n";
