@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+const int KAPASITAS_MAKSIMUM = 20;
+
 struct Mobil {
     string plat;
     string merk;
@@ -89,10 +91,19 @@ void UpdateWaktuParkir() {
 }
 
 void TambahkanKendaraan() {
+    if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
+        cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\n";
+        return;
+    
     int jumlah;
     cout << "\nMasukkan jumlah mobil yang akan diparkirkan: ";
     cin >> jumlah;
-    cin.get(); 
+    cin.get();
+
+    if (daftarMobil.size() + jumlah > KAPASITAS_MAKSIMUM) {
+        int sisa = KAPASITAS_MAKSIMUM - daftarMobil.size();
+        cout << "\nHanya " << sisa << " slot parkir yang tersedia.\n";
+        jumlah = sisa;
 
     for (int i = 0; i < jumlah; i++) {
         Mobil mobilBaru;
