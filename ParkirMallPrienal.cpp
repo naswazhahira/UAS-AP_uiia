@@ -94,7 +94,7 @@ void TambahkanKendaraan() {
     if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
         cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\n";
         return;
-    
+    }
     int jumlah;
     cout << "\nMasukkan jumlah mobil yang akan diparkirkan: ";
     cin >> jumlah;
@@ -124,7 +124,7 @@ void TambahkanKendaraan() {
         daftarMobil.push_back(mobilBaru);
     }
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
-}
+    }
 void TampilkanKendaraan() {
     UpdateWaktuParkir();
     int mobilbelumbayar = 0;
