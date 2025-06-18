@@ -125,6 +125,7 @@ void TambahkanKendaraan() {
     }
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
     }
+}
 void TampilkanKendaraan() {
     UpdateWaktuParkir();
     int mobilbelumbayar = 0;
