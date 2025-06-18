@@ -16,12 +16,14 @@ struct Mobil {
 
 vector<Mobil> daftarMobil;
 
+// Fungsi untuk mencetak garis dengan karakter tertentu agar tampilan lebih rapi
 void CetakGaris(char karakter,int jumlah) {
     for (int i = 0; i < jumlah; i++) {
         cout << karakter;
     }
 }
 
+// Fungsi untuk memeriksa data petugas
 int CheckDataPetugas(string nama_petugas, long id_petugas) {
     if (nama_petugas == "Endriano Kitswanto" && id_petugas == 231401073) {
         return 1;
@@ -29,6 +31,7 @@ int CheckDataPetugas(string nama_petugas, long id_petugas) {
     return 0;
 }
 
+// Fungsi untuk menampilkan tampilan awal
 void TampilanAwal() {
     CetakGaris('=', 80);
     cout<<endl;
@@ -51,6 +54,7 @@ void TampilanAwal() {
 
 }
 
+// Fungsi untuk menampilkan opsi awal
 char TampilanAwalOpsi(){
     char opsi;
     
@@ -218,11 +222,14 @@ void TampilanKeluar() {
     CetakGaris('=', 80);
 }
 
+// Main Program
 int main() {
     string nama;
     long id;
     
+    // Memanggil tampilan awal
     TampilanAwal();
+    // Meminta input nama dan ID petugas
     cout << "Masukkan nama : ";
     getline(cin, nama);
     cout << "Masukkan ID   : ";
@@ -230,6 +237,7 @@ int main() {
     cin.get();
 
     system("cls");
+    // Memeriksa data petugas, jika valid maka akan menampilkan data petugas dan melanjutkan ke opsi
     if (CheckDataPetugas(nama, id) == 1) {
         cout << endl;
         CetakGaris('=', 80);
@@ -244,6 +252,7 @@ int main() {
         CetakGaris('-', 24);
         cout << endl;
         
+        // Menampilkan opsi awal dan menunggu input dari petugas
        char pilihan;
         do {
             pilihan = TampilanAwalOpsi();
