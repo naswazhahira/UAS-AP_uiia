@@ -78,6 +78,7 @@ char TampilanAwalOpsi(){
     return opsi;
 }
 
+//Fungsi untuk menentukan waktu parkir mobil
 void UpdateWaktuParkir() {
     for (int i = 0; i < daftarMobil.size(); i++) {
         if (!daftarMobil[i].sudahbayar) {
@@ -168,13 +169,15 @@ void TampilkanKendaraan() {
     }
 }
 
+//fungsi menentukan harga parkir mobil 
 int HitungBiayaParkir(int jam, int menit, int detik) {
-    int totalDetik = jam * 3600 + menit * 60 + detik;
-    double tarifPerDetik = 7140.0 / 3600.0; 
+    int totalDetik = jam * 3600 + menit * 60 + detik; //menjumlahkan durasi
+    double tarifPerDetik = 7140.0 / 3600.0; //patokan per jam
     int biaya = totalDetik * tarifPerDetik;
     return biaya;
 }
 
+//Fungsi menampilkan harga parkir sekaligus pembayaran
 void Pembayaran() {
     UpdateWaktuParkir();
     string platInput;
@@ -183,7 +186,7 @@ void Pembayaran() {
     cout << "\nMasukkan plat mobil yang ingin dibayar: ";
     getline(cin, platInput);
 
-    for (auto &mobil : daftarMobil) {
+    for (auto &mobil : daftarMobil) { //mencari mobil yang terdaftar
         string platTerdaftar = mobil.plat;
 
         if (platInput == platTerdaftar) {
@@ -193,13 +196,13 @@ void Pembayaran() {
             }
 
             int biaya = HitungBiayaParkir(mobil.jam, mobil.menit, mobil.detik);
-            cout << "B I A Y A  P A R K I R : Rp " << biaya << endl;
+            cout << "B I A Y A  P A R K I R : Rp " << biaya << endl; //tampilan biaya parkir
             char konfirmasi;
             cout << "Apakah pembayaran dilakukan? (y/n): ";
             cin >> konfirmasi;
             cin.get();
 
-            if (konfirmasi == 'y' || konfirmasi == 'Y') {
+            if (konfirmasi == 'y' || konfirmasi == 'Y') { //tampilan jika sudah bayar 
                 mobil.sudahbayar = true;
                 cout << "Pembayaran berhasil. Mobil boleh keluar.\n\n";
             } else {
