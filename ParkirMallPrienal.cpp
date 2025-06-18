@@ -93,27 +93,24 @@ void UpdateWaktuParkir() {
 }
 
 void TambahkanKendaraan() {
+    if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
+        cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\nParkiran hanya dapat memuat 20 mobil!\n";
+        return;
+    }
+
     int jumlah;
     cout << "Masukkan jumlah mobil yang akan diparkirkan: ";
     cin >> jumlah;
     cin.get();
 
-    if (jumlah <= 0) {
-        cout << "Jumlah mobil tidak valid. Harap masukkan angka positif.\n";
-        return;
-    }
-    else if (jumlah > KAPASITAS_MAKSIMUM) {
+    if (daftarMobil.size() + jumlah > KAPASITAS_MAKSIMUM) {
         cout << "Maaf, parkiran hanya dapat memuat 20 mobil.\n";
         return;
     }
-    else if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
-        cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\nParkiran hanya dapat memuat 20 mobil!\n";
-        return;
-    }
-    else {
-        for (int i = 0; i < jumlah; i++) {
+
+    for (int i = 0; i < jumlah; i++) {
         Mobil mobilBaru;
-        
+            
         cout << "\nMobil ke-" << daftarMobil.size() + 1 << endl;
         cout << "Masukkan plat mobil    : ";
         getline(cin, mobilBaru.plat);
@@ -126,12 +123,11 @@ void TambahkanKendaraan() {
         mobilBaru.menit = 0;
         mobilBaru.detik = 0;
         mobilBaru.sudahbayar = false;
-        
+            
         daftarMobil.push_back(mobilBaru);
-        }
+    }
     system("cls");
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
-    }
 }
 
 void TampilkanKendaraan() {
@@ -143,7 +139,6 @@ void TampilkanKendaraan() {
             mobilbelumbayar++;
         }
     }
-    //  cout << "Sisa slot parkir: " << KAPASITAS_MAKSIMUM - daftarMobil.size() << endl;
     
     if (mobilbelumbayar == 0) {
         cout << "\nBelum ada kendaraan yang sedang parkir.\n\n";
@@ -164,6 +159,8 @@ void TampilkanKendaraan() {
                 nomor++;
             }
         }
+        CetakGaris('=', 80); cout << endl;
+        cout << "Sisa slot parkir: " << KAPASITAS_MAKSIMUM - daftarMobil.size() << endl;
     }
 }
 
