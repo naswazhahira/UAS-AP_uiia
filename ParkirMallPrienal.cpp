@@ -219,6 +219,7 @@ void Pembayaran() {
     cout << "PLAT TIDAK TERDAFTAR.\n\n";
 }
 
+// Fungsi untuk menampilkan pesan keluar
 void TampilanKeluar() {
     system("cls");
     CetakGaris('=', 80); cout << endl;
