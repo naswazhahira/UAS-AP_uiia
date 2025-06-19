@@ -4,6 +4,7 @@ using namespace std;
 
 const int KAPASITAS_MAKSIMUM = 20;
 
+// Struktur data untuk menyimpan informasi mobil
 struct Mobil {
     string plat;
     string merk;
@@ -14,6 +15,7 @@ struct Mobil {
     int detik;
 };
 
+// Vector untuk menyimpan daftar mobil yang terparkir
 vector<Mobil> daftarMobil;
 
 // Fungsi untuk mencetak garis dengan karakter tertentu agar tampilan lebih rapi
@@ -97,6 +99,7 @@ void UpdateWaktuParkir() {
     }
 }
 
+// Fungsi menambahkan kendaraan baru ke dalam daftar
 void TambahkanKendaraan() {
     if (daftarMobil.size() >= KAPASITAS_MAKSIMUM) {
         cout << "\nParkir sudah penuh! Tidak dapat menambah kendaraan baru.\nParkiran hanya dapat memuat 20 mobil!\n";
@@ -135,6 +138,7 @@ void TambahkanKendaraan() {
     cout << "\n" << jumlah << " mobil berhasil ditambahkan ke daftar parkir!\n";
 }
 
+// Fungsi menampilkan semua kendaraan ke dalam daftar
 void TampilkanKendaraan() {
     system("cls");
     UpdateWaktuParkir();
