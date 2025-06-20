@@ -165,7 +165,7 @@ void TampilkanKendaraan() {
     UpdateWaktuParkir();
     int mobilAktif = hitungmobilaktif();
     
-    if (mobilbelumbayar == 0) {
+    if (mobilAktif == 0) {
         cout << "\nBelum ada kendaraan yang sedang parkir.\n\n";
     } else {
         cout << "\nDAFTAR MOBIL YANG SEDANG TERPARKIR :\n";
